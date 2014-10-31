@@ -15,6 +15,7 @@ import com.myzxing.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,14 +28,19 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 
 public final class CaptureActivity extends Activity implements
 		SurfaceHolder.Callback {
-	private Button btn_back;
-	private Button btn_torch;
+	private ImageView button_cancel;
+	private ImageView button_torch;
+	private TextView button_local;
 	private boolean isTorchOn = false;
 	private CameraManager cameraManager;
 	private CaptureActivityHandler handler;
@@ -68,30 +74,6 @@ public final class CaptureActivity extends Activity implements
 		window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		setContentView(R.layout.capture);
 
-		btn_back = (Button) findViewById(R.id.btn_back);
-		btn_back.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				CaptureActivity.this.finish();
-			}
-		});
-		btn_torch = (Button) findViewById(R.id.btn_torch);
-		btn_torch.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// 开关灯
-				if (isTorchOn) {
-					isTorchOn = false;
-					btn_torch.setText("开灯");
-					cameraManager.setTorch(false);
-				} else {
-					isTorchOn = true;
-					btn_torch.setText("关灯");
-					cameraManager.setTorch(true);
-				}
-			}
-		});
-
 		hasSurface = false;
 		inactivityTimer = new InactivityTimer(this);
 		beepManager = new BeepManager(this);
@@ -104,6 +86,43 @@ public final class CaptureActivity extends Activity implements
 		super.onResume();
 
 		cameraManager = new CameraManager(getApplication());
+		
+		button_cancel = (ImageView) findViewById(R.id.button_cancel);
+		button_cancel.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				CaptureActivity.this.finish();
+			}
+		});
+		button_torch = (ImageView) findViewById(R.id.button_torch);
+		if(cameraManager.isSupportTorch()) {
+			button_torch.setVisibility(View.VISIBLE);
+			button_torch.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// 开关灯
+					if (isTorchOn) {
+						isTorchOn = false;
+						button_torch.setImageResource(R.drawable.barcode_torch_off);
+						cameraManager.setTorch(false);
+					} else {
+						isTorchOn = true;
+						button_torch.setImageResource(R.drawable.barcode_torch_on);
+						cameraManager.setTorch(true);
+					}
+				}
+			});
+		} else {
+			button_torch.setVisibility(View.INVISIBLE);
+		}
+		button_local = (TextView) findViewById(R.id.button_local);
+		button_local.setText("相册");
+		button_local.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(CaptureActivity.this, "button_local", Toast.LENGTH_LONG).show();
+			}
+		});		
 
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
 		viewfinderView.setCameraManager(cameraManager);

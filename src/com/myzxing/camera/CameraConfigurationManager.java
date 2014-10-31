@@ -18,6 +18,8 @@ package com.myzxing.camera;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.FeatureInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.hardware.Camera;
 import android.preference.PreferenceManager;
@@ -175,6 +177,14 @@ final class CameraConfigurationManager {
 
 	Point getScreenResolution() {
 		return screenResolution;
+	}
+	
+	boolean isSupportFlash(){
+		FeatureInfo[]  features=context.getPackageManager().getSystemAvailableFeatures();
+		for(FeatureInfo f : features) {
+			if(PackageManager.FEATURE_CAMERA_FLASH.equals(f.name)) return true;//判断设备是否支持闪光灯
+		}
+		return false;
 	}
 
 	boolean getTorchState(Camera camera) {

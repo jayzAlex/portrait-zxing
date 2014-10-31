@@ -167,6 +167,10 @@ public final class CameraManager {
 			previewing = false;
 		}
 	}
+	
+	public synchronized boolean isSupportTorch(){
+		return configManager.isSupportFlash();
+	} 
 
 	/**
 	 * Convenience method for

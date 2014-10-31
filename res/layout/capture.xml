@@ -18,11 +18,18 @@
             android:layout_height="fill_parent" />
     </FrameLayout>
     
+    <FrameLayout android:id="@+id/status_view" android:paddingLeft="30.0dip" android:paddingTop="34.0dip" android:paddingRight="30.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <ImageView android:layout_gravity="left|center" android:id="@+id/button_cancel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/selector_barcode_cancel" android:onClick="onClick" />
+        <ImageView android:layout_gravity="center" android:id="@+id/button_torch" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/barcode_torch_off" android:onClick="onClick" />
+        <TextView android:textSize="18.0dip" android:textColor="@android:color/white" android:gravity="center" android:layout_gravity="right|center" android:id="@+id/button_local" android:background="@drawable/barcode_local_pic_bg_selector" android:clickable="true" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    </FrameLayout>
+    
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@color/gray"
-        android:layout_alignParentTop="true" >
+        android:layout_alignParentTop="true" 
+        android:visibility="gone" >
 
         <Button
             android:id="@+id/btn_back"
@@ -42,6 +49,6 @@
             android:text="开灯"
             android:textColor="@color/white"
             android:textSize="18sp" />
-    </RelativeLayout>    
+    </RelativeLayout>
 
 </RelativeLayout>
