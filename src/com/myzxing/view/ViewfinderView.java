@@ -101,7 +101,7 @@ public final class ViewfinderView extends View {
 			Rect targetRect = new Rect(frame.left, frame.bottom + 20, frame.right, frame.bottom + 80);
 			Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 			paint.setStrokeWidth(3);
-			paint.setTextSize(25);
+			paint.setTextSize(28);
 			paint.setColor(hintColor);
 			FontMetricsInt fontMetrics = paint.getFontMetricsInt();
 			int baseline = targetRect.top + (targetRect.bottom - targetRect.top - fontMetrics.bottom + fontMetrics.top) / 2 - fontMetrics.top;
@@ -146,7 +146,7 @@ public final class ViewfinderView extends View {
 			// middle + 2, paint);
 
 			// 将扫描线修改为上下走的线
-			if ((i += 5) < frame.bottom - frame.top) {
+			if ((i += 2) < frame.bottom - frame.top) {
 				/* 以下为用渐变线条作为扫描线 */
 				// 渐变图为矩形
 				// mDrawable.setShape(GradientDrawable.RECTANGLE);
